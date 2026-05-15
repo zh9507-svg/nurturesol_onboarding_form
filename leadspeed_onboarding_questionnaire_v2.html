@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadSpeed — Client Onboarding Questionnaire</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1E3C;
+  --blue: #1A3A6B;
+  --accent: #2E75B6;
+  --teal: #1D9E75;
+  --teal-light: #E1F5EE;
+  --amber: #BA7517;
+  --amber-light: #FAEEDA;
+  --coral: #993C1D;
+  --coral-light: #FAECE7;
+  --white: #ffffff;
+  --off: #F7F9FC;
+  --border: #D8E4F0;
+  --muted: #6B7A8F;
+  --text: #1A2638;
+  --label: #334155;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+.header {
+  background: var(--navy);
+  padding: 2.5rem 2rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(46,117,182,0.15);
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 20%;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(29,158,117,0.1);
+}
+.header-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+.brand { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+.brand-logo {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; color: #fff; font-weight: 400;
+}
+.brand-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: 0.08em; text-transform: uppercase; }
+.header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  color: #fff;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+.header h1 em { color: #9FE1CB; font-style: italic; }
+.header p { color: rgba(255,255,255,0.6); font-size: 14px; max-width: 520px; }
+.header-meta {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.meta-item { font-size: 12px; color: rgba(255,255,255,0.5); }
+.meta-item strong { color: rgba(255,255,255,0.85); display: block; font-size: 13px; margin-bottom: 2px; }
+
+/* PROGRESS */
+.progress-wrap { background: var(--navy); padding: 0 2rem 1.5rem; position: sticky; top: 0; z-index: 100; }
+.progress-inner { max-width: 860px; margin: 0 auto; }
+.progress-bar-bg { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+.progress-bar-fill { height: 3px; background: var(--teal); border-radius: 2px; width: 0%; transition: width 0.4s ease; }
+.progress-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; }
+
+/* MAIN */
+.main { max-width: 860px; margin: 0 auto; padding: 2rem; }
+
+/* SECTIONS */
+.section {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+.section-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-num {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.section-num.teal { background: var(--teal); }
+.section-num.amber { background: var(--amber); }
+.section-num.blue { background: var(--accent); }
+.section-num.coral { background: var(--coral); }
+
+.section-title { font-size: 15px; font-weight: 600; color: var(--navy); }
+.section-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.section-body { padding: 1.5rem; }
+
+/* FORM GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+@media(max-width:600px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .span-2, .span-3 { grid-column: span 1; }
+}
+
+/* FIELD */
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label {
+  font-size: 12px; font-weight: 600;
+  color: var(--label);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.field label .req { color: var(--coral); margin-left: 2px; }
+.field-hint { font-size: 11px; color: var(--muted); margin-top: -3px; }
+.field input,
+.field select,
+.field textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--off);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  outline: none;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(46,117,182,0.1);
+  background: #fff;
+}
+.field textarea { resize: vertical; min-height: 80px; }
+.field select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A8F' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+
+/* CHECKBOX GROUP */
+.check-group { display: flex; flex-direction: column; gap: 6px; }
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--off);
+}
+.check-item:hover { border-color: var(--accent); background: #fff; }
+.check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+.check-item span { font-size: 13px; color: var(--text); }
+
+/* RADIO GROUP */
+.radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.radio-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--off);
+  font-size: 13px;
+}
+.radio-pill:hover { border-color: var(--accent); background: #fff; }
+.radio-pill input { display: none; }
+.radio-pill.selected { background: #E6F1FB; border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+.divider-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
+
+/* NOTE BOX */
+.note-box {
+  background: var(--teal-light);
+  border: 1px solid #9FE1CB;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #085041;
+  margin-top: 1rem;
+}
+.note-box.amber {
+  background: var(--amber-light);
+  border-color: #FAC775;
+  color: #633806;
+}
+.note-box.coral {
+  background: var(--coral-light);
+  border-color: #F0997B;
+  color: #4A1B0C;
+}
+
+/* SUBMIT */
+.submit-wrap {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.submit-info { font-size: 13px; color: var(--muted); }
+.submit-info strong { color: var(--text); display: block; font-size: 14px; margin-bottom: 2px; }
+.btn-submit {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn-submit:hover { background: var(--blue); transform: translateY(-1px); }
+.btn-print {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  background: transparent;
+  color: var(--muted);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-print:hover { border-color: var(--accent); color: var(--accent); }
+
+/* FOOTER */
+.footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--muted); }
+.footer strong { color: var(--navy); }
+
+/* PRINT */
+@media print {
+  .progress-wrap, .btn-submit, .btn-print { display: none !important; }
+  .header { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section { break-inside: avoid; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">L</div>
+      <span class="brand-name">LeadSpeed — One Home Agency</span>
+    </div>
+    <h1>Client Onboarding <em>Questionnaire</em></h1>
+    <p>Complete this form so we can build and activate your LeadSpeed AI Response System. Every field matters — the more detail you provide, the faster and better your system will be configured.</p>
+    <div class="header-meta">
+      <div class="meta-item"><strong>Activation timeline</strong>24–48 hours after submission</div>
+      <div class="meta-item"><strong>Built by</strong>NurtureSol LLC — nurturesol.com</div>
+      <div class="meta-item"><strong>Support</strong>Zaid K. — available throughout</div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0 of 10 sections complete</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- SECTION 1: BUSINESS BASICS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Business information</div>
+        <div class="section-sub">Core details used throughout your entire system</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field">
+          <label>Legal business name <span class="req">*</span></label>
+          <div class="field-hint">Exactly as registered — used for A2P 10DLC compliance</div>
+          <input type="text" placeholder="e.g. Smith HVAC Services LLC">
+        </div>
+        <div class="field">
+          <label>Trading / DBA name</label>
+          <div class="field-hint">Name customers know you by, if different</div>
+          <input type="text" placeholder="e.g. Smith Heating & Cooling">
+        </div>
+        <div class="field">
+          <label>Business phone number <span class="req">*</span></label>
+          <div class="field-hint">Primary number for Twilio setup and caller ID</div>
+          <input type="tel" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="field">
+          <label>Business email <span class="req">*</span></label>
+          <div class="field-hint">Used for email sender setup and internal notifications</div>
+          <input type="email" placeholder="hello@yourbusiness.com">
+        </div>
+        <div class="field">
+          <label>Website URL <span class="req">*</span></label>
+          <input type="url" placeholder="https://www.yourbusiness.com">
+        </div>
+        <div class="field">
+          <label>EIN / Tax ID <span class="req">*</span></label>
+          <div class="field-hint">Required for A2P 10DLC brand registration — kept confidential</div>
+          <input type="text" placeholder="XX-XXXXXXX">
+        </div>
+        <div class="field span-2">
+          <label>Business address (full) <span class="req">*</span></label>
+          <div class="field-hint">Street address, city, state, ZIP — used for compliance registration</div>
+          <input type="text" placeholder="123 Main Street, Suite 100, Houston, TX 77001">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CONTACT PEOPLE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num teal">2</div>
+      <div>
+        <div class="section-title">Key contacts</div>
+        <div class="section-sub">Who we communicate with during setup and ongoing operations</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="divider-label">Primary contact (owner or decision maker)</div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Full name <span class="req">*</span></label>
+          <input type="text" placeholder="First and last name">
+        </div>
+        <div class="field">
+          <label>Title / role</label>
+          <input type="text" placeholder="e.g. Owner, General Manager">
+        </div>
+        <div class="field">
+          <label>Phone (mobile preferred) <span class="req">*</span></label>
+          <div class="field-hint">Receives qualified lead alerts and system notifications</div>
+          <input type="tel" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" placeholder="owner@yourbusiness.com">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="divider-label">Technical contact (if different — person who accesses GHL)</div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Full name</label>
+          <input type="text" placeholder="Leave blank if same as above">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="tech@yourbusiness.com">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="field">
+          <label>Preferred contact method</label>
+          <select>
+            <option value="">Select one</option>
+            <option>SMS / text</option>
+            <option>Email</option>
+            <option>Phone call</option>
+            <option>Slack</option>
+            <option>WhatsApp</option>
+          </select>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="divider-label">Additional team members who need GHL access</div>
+      <div class="field">
+        <label>Names, emails, and roles</label>
+        <div class="field-hint">e.g. Sarah Jones (sarah@co.com) — Sales Rep / Mark Smith (mark@co.com) — Office Manager</div>
+        <textarea placeholder="List each person on a new line with their name, email, and role"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SERVICES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num amber">3</div>
+      <div>
+        <div class="section-title">Services offered</div>
+        <div class="section-sub">Used to train the AI chatbot and voice agent — be as specific as possible</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>Primary service category <span class="req">*</span></label>
+        <select>
+          <option value="">Select your main category</option>
+          <option>HVAC (Heating, Ventilation, Air Conditioning)</option>
+          <option>Roofing</option>
+          <option>Plumbing</option>
+          <option>Electrical</option>
+          <option>Storm damage / restoration</option>
+          <option>Windows and siding</option>
+          <option>Landscaping / lawn care</option>
+          <option>Pest control</option>
+          <option>Cleaning services</option>
+          <option>General contracting / remodeling</option>
+          <option>Solar installation</option>
+          <option>Garage doors</option>
+          <option>Foundation / waterproofing</option>
+          <option>Other — specify below</option>
+        </select>
+      </div>
+      <div class="field" style="margin-top:1rem">
+        <label>Full list of services you offer <span class="req">*</span></label>
+        <div class="field-hint">List every service — the AI will be trained on all of these. Include sub-services.</div>
+        <textarea style="min-height:120px" placeholder="e.g.&#10;- AC installation and replacement&#10;- Furnace repair and tune-up&#10;- Heat pump installation&#10;- Ductwork cleaning&#10;- Emergency HVAC repair (24/7)&#10;- Annual maintenance plans"></textarea>
+      </div>
+      <div class="divider"></div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Services you do NOT offer</label>
+          <div class="field-hint">AI needs to know what to decline — prevents false promises to leads</div>
+          <textarea placeholder="e.g. We do not handle commercial HVAC, pool heating, or radiant floor systems"></textarea>
+        </div>
+        <div class="field">
+          <label>Most requested / highest revenue service</label>
+          <div class="field-hint">AI will prioritize this in conversations</div>
+          <textarea placeholder="e.g. AC replacement is our #1 service, average job $4,500–$8,000"></textarea>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="divider-label">Pricing structure</div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Do you share pricing upfront? <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>Yes — we give firm prices</option>
+            <option>We give ranges (starting from / up to)</option>
+            <option>No — we only quote after inspection</option>
+            <option>Depends on the service</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Average job value ($)</label>
+          <div class="field-hint">Rough range — used for pipeline reporting</div>
+          <input type="text" placeholder="e.g. $500 – $8,000 depending on service">
+        </div>
+        <div class="field span-2">
+          <label>Pricing / ranges to share with leads (if applicable)</label>
+          <div class="field-hint">The AI will use this verbatim when asked about cost — be precise about what it should and should not say</div>
+          <textarea placeholder="e.g. For AC tune-ups we charge $89 flat. For replacements we say 'most homeowners in the area invest between $3,500 and $7,500 depending on the system size — we'll give you an exact quote after a free inspection.'"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: SERVICE AREA -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num blue">4</div>
+      <div>
+        <div class="section-title">Service area and coverage</div>
+        <div class="section-sub">Determines how the AI qualifies or declines leads based on location</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field">
+          <label>Primary city / metro area <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Houston, TX">
+        </div>
+        <div class="field">
+          <label>Maximum travel radius (miles)</label>
+          <input type="number" placeholder="e.g. 50">
+        </div>
+        <div class="field span-2">
+          <label>All cities / towns covered <span class="req">*</span></label>
+          <div class="field-hint">List every city, town, or neighborhood you service — AI will use this to qualify leads by location</div>
+          <textarea style="min-height:80px" placeholder="e.g. Houston, Sugar Land, Katy, Pearland, The Woodlands, Conroe, Baytown, Pasadena, League City, Missouri City"></textarea>
+        </div>
+        <div class="field span-2">
+          <label>ZIP codes covered (if you prefer this method)</label>
+          <textarea placeholder="Paste ZIP codes separated by commas — or leave blank if you listed cities above"></textarea>
+        </div>
+        <div class="field">
+          <label>Areas you do NOT cover</label>
+          <div class="field-hint">AI will politely decline leads from these locations</div>
+          <textarea placeholder="e.g. We do not service Galveston Island or areas more than 60 miles from Houston"></textarea>
+        </div>
+        <div class="field">
+          <label>Do you offer emergency / after-hours service? <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>Yes — 24/7 emergency service available</option>
+            <option>Yes — but only for existing customers</option>
+            <option>Weekdays only (Mon–Fri)</option>
+            <option>No emergency service</option>
+          </select>
+        </div>
+      </div>
+      <div class="note-box" style="margin-top:0">The AI voice agent and chatbot will automatically decline leads outside your service area and redirect them politely. Having this list complete prevents wasted follow-up on unqualified leads.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: BUSINESS HOURS + AVAILABILITY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Business hours and calendar availability</div>
+        <div class="section-sub">Used to set booking slots and AI after-hours behaviour</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="divider-label">Operating hours</div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Monday – Friday</label>
+          <input type="text" placeholder="e.g. 8:00 AM – 6:00 PM">
+        </div>
+        <div class="field">
+          <label>Saturday</label>
+          <input type="text" placeholder="e.g. 9:00 AM – 2:00 PM / Closed">
+        </div>
+        <div class="field">
+          <label>Sunday</label>
+          <input type="text" placeholder="e.g. Closed / Emergency only">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="divider-label">Calendar and booking settings</div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Type of appointment booked <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>Free in-home estimate / inspection</option>
+            <option>Phone / video consultation</option>
+            <option>Paid diagnostic visit</option>
+            <option>Service call booking</option>
+            <option>Multiple types — explain below</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Appointment duration (minutes) <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>30 minutes</option>
+            <option>45 minutes</option>
+            <option>60 minutes</option>
+            <option>90 minutes</option>
+            <option>120 minutes (2 hours)</option>
+            <option>Varies by service</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Buffer time between appointments (minutes)</label>
+          <select>
+            <option value="">Select one</option>
+            <option>None</option>
+            <option>15 minutes</option>
+            <option>30 minutes</option>
+            <option>60 minutes</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>How far in advance can leads book? <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>Same day (if slots available)</option>
+            <option>Next day minimum</option>
+            <option>2–3 days minimum</option>
+            <option>1 week minimum</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Maximum advance booking (days)</label>
+          <input type="number" placeholder="e.g. 30">
+        </div>
+        <div class="field">
+          <label>Number of concurrent technicians / sales reps</label>
+          <div class="field-hint">Helps us configure simultaneous booking slots correctly</div>
+          <input type="number" placeholder="e.g. 3">
+        </div>
+        <div class="field span-2">
+          <label>Blocked out dates / recurring unavailable times</label>
+          <div class="field-hint">Holidays, team meetings, training days — we'll block these in the calendar</div>
+          <textarea placeholder="e.g. Every Friday 12–2pm team meeting. Closed all federal holidays. No bookings Dec 24–Jan 2."></textarea>
+        </div>
+        <div class="field span-2">
+          <label>Existing calendar tool (if any)</label>
+          <div class="field-hint">We connect GHL calendar to your existing tool if applicable</div>
+          <select>
+            <option value="">Select one</option>
+            <option>None — use GHL calendar only</option>
+            <option>Google Calendar</option>
+            <option>Outlook / Microsoft 365</option>
+            <option>Calendly</option>
+            <option>ServiceTitan</option>
+            <option>Jobber</option>
+            <option>Housecall Pro</option>
+            <option>Other — specify below</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: AI AGENT TRAINING -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num teal">6</div>
+      <div>
+        <div class="section-title">AI agent training</div>
+        <div class="section-sub">The more detail here, the more natural and effective your AI will be</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="divider-label">Brand voice and tone</div>
+      <div class="grid-2">
+        <div class="field">
+          <label>AI agent name <span class="req">*</span></label>
+          <div class="field-hint">What the AI introduces itself as in conversations</div>
+          <input type="text" placeholder="e.g. Alex, Jordan, Sam — or your business name">
+        </div>
+        <div class="field">
+          <label>Tone of voice <span class="req">*</span></label>
+          <select>
+            <option value="">Select the closest match</option>
+            <option>Friendly and conversational</option>
+            <option>Professional and formal</option>
+            <option>Warm and reassuring</option>
+            <option>Direct and efficient</option>
+            <option>Energetic and enthusiastic</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label>How would you describe your brand personality?</label>
+          <div class="field-hint">e.g. "We're the trusted neighbourhood expert — not pushy, just helpful and reliable"</div>
+          <textarea placeholder="Describe how you want customers to feel when they interact with your business..."></textarea>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="divider-label">Qualification criteria</div>
+      <div class="grid-2">
+        <div class="field">
+          <label>What makes a lead qualified? <span class="req">*</span></label>
+          <div class="field-hint">AI will use this to decide when to alert your team vs. move to nurture</div>
+          <textarea placeholder="e.g. In our service area + needs service within 30 days + homeowner (not renter) + has a budget or is open to financing"></textarea>
+        </div>
+        <div class="field">
+          <label>What makes a lead unqualified?</label>
+          <div class="field-hint">AI will gracefully close the conversation and move them to nurture</div>
+          <textarea placeholder="e.g. Outside service area, renter (not owner), not ready for 90+ days, commercial property"></textarea>
+        </div>
+        <div class="field">
+          <label>Minimum job value to qualify ($)</label>
+          <div class="field-hint">AI won't book appointments for jobs below this threshold</div>
+          <input type="number" placeholder="e.g. 500">
+        </div>
+        <div class="field">
+          <label>Do you service renters?</label>
+          <select>
+            <option value="">Select one</option>
+            <option>Yes — we service renters too</option>
+            <option>Only if they have landlord approval</option>
+            <option>No — homeowners only</option>
+          </select>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="divider-label">Top objections and how you handle them</div>
+      <div class="field">
+        <label>List your 5–10 most common objections and your preferred response <span class="req">*</span></label>
+        <div class="field-hint">The AI will be trained on these — the better your responses here, the better it handles real conversations</div>
+        <textarea style="min-height:160px" placeholder="1. 'It's too expensive' → 'We offer 0% financing for 12 months — most customers pay less than $100/month. Want me to book a free estimate so we can show you options?'&#10;&#10;2. 'I need to think about it' → 'Totally understand. Would it help to at least lock in a free inspection so you have all the facts before deciding?'&#10;&#10;3. 'I already have someone' → 'No problem at all — if anything changes or you want a second opinion, we're always here. Can I send you our contact info?'&#10;&#10;Add more below..."></textarea>
+      </div>
+      <div class="divider"></div>
+      <div class="divider-label">Escalation triggers</div>
+      <div class="field">
+        <label>When should the AI hand off to a human immediately? <span class="req">*</span></label>
+        <div class="field-hint">Phrases or situations that trigger an instant live agent alert — regardless of AI conversation status</div>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox" checked><span>Lead explicitly asks to speak to a human</span></label>
+          <label class="check-item"><input type="checkbox" checked><span>Lead says it's an emergency or urgent</span></label>
+          <label class="check-item"><input type="checkbox"><span>Lead mentions a competitor by name</span></label>
+          <label class="check-item"><input type="checkbox"><span>Lead expresses frustration or anger</span></label>
+          <label class="check-item"><input type="checkbox"><span>Lead mentions a specific large job (over $X)</span></label>
+          <label class="check-item"><input type="checkbox"><span>Lead is a returning customer</span></label>
+        </div>
+      </div>
+      <div class="field" style="margin-top:1rem">
+        <label>Other escalation triggers (custom)</label>
+        <textarea placeholder="Any specific phrases or scenarios that should immediately alert your team..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: LEAD SOURCES + ADS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num blue">7</div>
+      <div>
+        <div class="section-title">Lead sources and advertising</div>
+        <div class="section-sub">Determines which integrations to connect and how to track lead attribution</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>Which platforms are you currently advertising on? <span class="req">*</span></label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>Facebook / Instagram ads (Meta)</span></label>
+          <label class="check-item"><input type="checkbox"><span>Google Ads (Search)</span></label>
+          <label class="check-item"><input type="checkbox"><span>Google Local Services Ads (LSA)</span></label>
+          <label class="check-item"><input type="checkbox"><span>TikTok Ads</span></label>
+          <label class="check-item"><input type="checkbox"><span>Nextdoor</span></label>
+          <label class="check-item"><input type="checkbox"><span>Yelp</span></label>
+          <label class="check-item"><input type="checkbox"><span>HomeAdvisor / Angi</span></label>
+          <label class="check-item"><input type="checkbox"><span>Thumbtack</span></label>
+          <label class="check-item"><input type="checkbox"><span>Not currently advertising — organic / referral only</span></label>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Facebook Ad Account ID</label>
+          <div class="field-hint">Found in Meta Business Manager — needed for CAPI integration</div>
+          <input type="text" placeholder="e.g. 123456789012345">
+        </div>
+        <div class="field">
+          <label>Facebook Page ID or Page URL</label>
+          <input type="text" placeholder="e.g. https://facebook.com/yourpage">
+        </div>
+        <div class="field">
+          <label>Google Ads Customer ID</label>
+          <div class="field-hint">Format: XXX-XXX-XXXX — found in Google Ads dashboard top right</div>
+          <input type="text" placeholder="e.g. 123-456-7890">
+        </div>
+        <div class="field">
+          <label>Monthly ad spend budget (approx.)</label>
+          <select>
+            <option value="">Select range</option>
+            <option>Under $500/month</option>
+            <option>$500 – $1,500/month</option>
+            <option>$1,500 – $3,000/month</option>
+            <option>$3,000 – $5,000/month</option>
+            <option>$5,000 – $10,000/month</option>
+            <option>$10,000+/month</option>
+            <option>Not currently running ads</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label>Current landing page URL (if you have one)</label>
+          <div class="field-hint">We'll audit this page and may recommend improvements or replace it with a GHL page</div>
+          <input type="url" placeholder="https://www.yourbusiness.com/free-estimate">
+        </div>
+      </div>
+      <div class="note-box amber">If you are running Facebook or Instagram lead ads, have your Meta Business Manager access ready at kickoff. We'll connect it to GHL and enable server-side CAPI tracking within the first 48 hours.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: EXISTING TECH STACK -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">Existing tools and technology</div>
+        <div class="section-sub">We need to know what you already use so we can connect, replace, or avoid conflicts</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field">
+          <label>Do you currently use a CRM? <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>No CRM currently</option>
+            <option>GoHighLevel (GHL)</option>
+            <option>HubSpot</option>
+            <option>Salesforce</option>
+            <option>ServiceTitan</option>
+            <option>Jobber</option>
+            <option>Housecall Pro</option>
+            <option>FieldEdge</option>
+            <option>Zoho CRM</option>
+            <option>Other — specify below</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Existing GHL account? <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>Yes — I have an existing GHL account</option>
+            <option>No — create a new sub-account for me</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Email marketing tool</label>
+          <select>
+            <option value="">Select one</option>
+            <option>None — use GHL email</option>
+            <option>Mailchimp</option>
+            <option>Klaviyo</option>
+            <option>ActiveCampaign</option>
+            <option>Constant Contact</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Website platform</label>
+          <select>
+            <option value="">Select one</option>
+            <option>WordPress</option>
+            <option>Wix</option>
+            <option>Squarespace</option>
+            <option>Shopify</option>
+            <option>GHL pages</option>
+            <option>Custom / agency-built</option>
+            <option>No website currently</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Review platform</label>
+          <select>
+            <option value="">Select one</option>
+            <option>Google Business Profile (primary)</option>
+            <option>Yelp (primary)</option>
+            <option>Facebook (primary)</option>
+            <option>Multiple platforms</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Google Business Profile link</label>
+          <div class="field-hint">Paste the URL of your Google listing — used for review requests</div>
+          <input type="url" placeholder="https://g.page/r/...">
+        </div>
+        <div class="field span-2">
+          <label>Any other tools or software we should know about</label>
+          <textarea placeholder="e.g. We use ServiceTitan for dispatching, Jobber for invoicing, Slack internally for team communication — these need to stay in place"></textarea>
+        </div>
+      </div>
+      <div class="note-box coral">If you have data in an existing CRM you want imported into GHL (existing contacts, pipeline history, notes), let us know below. We'll handle the migration. Large imports take an additional 24–48 hours.</div>
+      <div class="field" style="margin-top:1rem">
+        <label>Data migration needed?</label>
+        <select>
+          <option value="">Select one</option>
+          <option>No — starting fresh</option>
+          <option>Yes — I have contacts to import (I'll share a CSV)</option>
+          <option>Yes — I have an existing GHL account with data to keep</option>
+          <option>Not sure — let's discuss</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: SMS + COMPLIANCE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num teal">9</div>
+      <div>
+        <div class="section-title">SMS, phone and compliance</div>
+        <div class="section-sub">Required for A2P 10DLC registration — do not skip any field</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field">
+          <label>Business type <span class="req">*</span></label>
+          <div class="field-hint">For TCR brand registration</div>
+          <select>
+            <option value="">Select one</option>
+            <option>Sole proprietor</option>
+            <option>LLC</option>
+            <option>S-Corp / C-Corp</option>
+            <option>Partnership</option>
+            <option>Non-profit</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>State of incorporation / registration <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Texas">
+        </div>
+        <div class="field">
+          <label>Do you have an existing Twilio account?</label>
+          <select>
+            <option value="">Select one</option>
+            <option>No — create one for me</option>
+            <option>Yes — I'll share credentials</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Preferred area code for new phone number</label>
+          <div class="field-hint">The LeadSpeed SMS number — ideally local to your service area</div>
+          <input type="text" placeholder="e.g. 713 (Houston), 305 (Miami)">
+        </div>
+        <div class="field span-2">
+          <label>SMS opt-in consent language on your current forms</label>
+          <div class="field-hint">Paste any existing consent language — we'll update it to meet current A2P requirements</div>
+          <textarea placeholder="e.g. 'By submitting this form you agree to receive text messages from us.' — or leave blank if you don't have any"></textarea>
+        </div>
+        <div class="field span-2">
+          <label>Any previous SMS compliance issues, spam complaints, or carrier blocks?</label>
+          <div class="field-hint">Honest disclosure helps us fix issues proactively</div>
+          <select>
+            <option value="">Select one</option>
+            <option>No — clean history</option>
+            <option>Yes — SMS was flagged as spam by carriers</option>
+            <option>Yes — had deliverability issues in a previous system</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+      </div>
+      <div class="note-box">A2P 10DLC registration is submitted within 48 hours of kickoff. Approval typically takes 3–7 business days. During that window, system will send SMS from a temporary number. Your branded number activates once approved.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 10: BRANDING + CONTENT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num amber">10</div>
+      <div>
+        <div class="section-title">Branding, content and social proof</div>
+        <div class="section-sub">Used in email templates, SMS copy, and the AI audit tool</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field">
+          <label>Brand colors (hex codes if known)</label>
+          <input type="text" placeholder="e.g. #003366 (dark blue), #FF6600 (orange)">
+        </div>
+        <div class="field">
+          <label>Logo file location</label>
+          <div class="field-hint">Google Drive link, Dropbox, or we can grab it from your website</div>
+          <input type="url" placeholder="https://drive.google.com/...">
+        </div>
+        <div class="field">
+          <label>Number of Google reviews currently</label>
+          <input type="number" placeholder="e.g. 47">
+        </div>
+        <div class="field">
+          <label>Average Google star rating</label>
+          <select>
+            <option value="">Select one</option>
+            <option>5.0 ⭐⭐⭐⭐⭐</option>
+            <option>4.9 ⭐⭐⭐⭐⭐</option>
+            <option>4.8 ⭐⭐⭐⭐⭐</option>
+            <option>4.7 ⭐⭐⭐⭐½</option>
+            <option>4.5 – 4.6 ⭐⭐⭐⭐½</option>
+            <option>4.0 – 4.4 ⭐⭐⭐⭐</option>
+            <option>Under 4.0</option>
+            <option>No reviews yet</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label>1–3 customer testimonials or review snippets</label>
+          <div class="field-hint">Used in email nurture sequences and the Speed Audit lead magnet — real quotes with customer first names work best</div>
+          <textarea style="min-height:100px" placeholder='"John and his team replaced our entire HVAC system in one day. Professional, clean, and affordable. We'll use them again for sure." — Sarah M., Houston TX&#10;&#10;Add more below..."></textarea>
+        </div>
+        <div class="field span-2">
+          <label>Your strongest trust signals / credentials</label>
+          <div class="field-hint">Certifications, awards, years in business, BBB rating, manufacturer partnerships — AI will reference these</div>
+          <textarea placeholder="e.g. 25+ years in business, BBB A+ rated, NATE-certified technicians, Carrier Factory Authorized Dealer, licensed and insured in TX"></textarea>
+        </div>
+        <div class="field span-2">
+          <label>Any guarantees or warranties you offer</label>
+          <div class="field-hint">AI will use these to close objections about price or trust</div>
+          <textarea placeholder="e.g. 100% satisfaction guarantee, 1-year labour warranty on all repairs, 10-year manufacturer warranty on new equipment, same-day service guarantee"></textarea>
+        </div>
+        <div class="field">
+          <label>Do you offer financing?</label>
+          <select>
+            <option value="">Select one</option>
+            <option>Yes — 0% for 12 months</option>
+            <option>Yes — flexible terms available</option>
+            <option>No</option>
+            <option>Working on it</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Financing provider (if applicable)</label>
+          <input type="text" placeholder="e.g. GreenSky, Synchrony, Service Finance">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 11: GOALS + EXPECTATIONS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num coral">11</div>
+      <div>
+        <div class="section-title">Goals and expectations</div>
+        <div class="section-sub">Helps us configure KPI tracking and align the system to what matters most to you</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field">
+          <label>How many leads do you currently receive per month?</label>
+          <select>
+            <option value="">Select range</option>
+            <option>Under 10</option>
+            <option>10 – 25</option>
+            <option>25 – 50</option>
+            <option>50 – 100</option>
+            <option>100 – 200</option>
+            <option>200+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>What is your current lead-to-booked-appointment rate?</label>
+          <select>
+            <option value="">Select range (estimate)</option>
+            <option>Under 10%</option>
+            <option>10 – 20%</option>
+            <option>20 – 30%</option>
+            <option>30 – 50%</option>
+            <option>Over 50%</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>What is your #1 goal with LeadSpeed? <span class="req">*</span></label>
+          <select>
+            <option value="">Select primary goal</option>
+            <option>Respond to leads faster (stop losing them to competitors)</option>
+            <option>Book more appointments from existing leads</option>
+            <option>Reduce manual follow-up work for my team</option>
+            <option>Cover after-hours leads we currently miss</option>
+            <option>Increase show rate on booked appointments</option>
+            <option>Get more Google reviews</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Biggest current pain point <span class="req">*</span></label>
+          <select>
+            <option value="">Select one</option>
+            <option>We're too slow to respond — leads go cold</option>
+            <option>We miss too many after-hours calls</option>
+            <option>Our show rate on appointments is too low</option>
+            <option>We have leads in our CRM we've never followed up on</option>
+            <option>Follow-up is inconsistent — depends on who's working</option>
+            <option>We're getting leads but can't figure out where they come from</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label>Anything else we should know before we start?</label>
+          <div class="field-hint">Special situations, past bad experiences with software, internal team dynamics, anything that will help us set this up right</div>
+          <textarea style="min-height:100px" placeholder="Share anything that would help us build a better system for your specific business..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 12: FINAL ACCESS CHECKLIST -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <div>
+        <div class="section-title">Access and credentials checklist</div>
+        <div class="section-sub">Check everything you're ready to provide at kickoff — we'll request the rest on the call</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>What access can you provide at kickoff?</label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox"><span>GHL account access (if existing)</span></label>
+          <label class="check-item"><input type="checkbox"><span>Facebook Business Manager admin access</span></label>
+          <label class="check-item"><input type="checkbox"><span>Google Ads account access</span></label>
+          <label class="check-item"><input type="checkbox"><span>Google Business Profile access</span></label>
+          <label class="check-item"><input type="checkbox"><span>Website / domain admin access (for DNS setup)</span></label>
+          <label class="check-item"><input type="checkbox"><span>Email hosting access (for DKIM / SPF DNS records)</span></label>
+          <label class="check-item"><input type="checkbox"><span>Twilio account (if existing)</span></label>
+          <label class="check-item"><input type="checkbox"><span>Logo files and brand assets</span></label>
+          <label class="check-item"><input type="checkbox"><span>EIN / business registration documents</span></label>
+          <label class="check-item"><input type="checkbox"><span>Existing contact list / CRM export (CSV)</span></label>
+        </div>
+      </div>
+      <div class="note-box" style="margin-top:1rem">You will NOT be asked to share passwords via this form. All credential sharing happens securely via LastPass, 1Password, or a private link at kickoff. This checklist is just so we know what to expect.</div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <div class="submit-info">
+      <strong>Ready to submit?</strong>
+      Double-check every section before submitting. Our team will review within 2 business hours and reach out to confirm your kickoff call.
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-print" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn-submit" onclick="handleSubmit()">Submit questionnaire →</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>LeadSpeed</strong> — One Home Agency x <strong>NurtureSol LLC</strong><br>
+  <span style="margin-top:4px;display:block">Questions? Contact Zaid at nurturesol.com</span>
+</div>
+
+<script>
+// Progress tracking
+function updateProgress() {
+  const inputs = document.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), select, textarea');
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  let filled = 0;
+  inputs.forEach(i => { if (i.value && i.value.trim()) filled++; });
+  checkboxes.forEach(c => { if (c.checked) filled++; });
+  const total = inputs.length + checkboxes.length;
+  const pct = Math.round((filled / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  const sections = 12;
+  const perSection = Math.round(pct / 100 * sections);
+  document.getElementById('progressLabel').textContent = pct + '% complete — keep going!';
+}
+
+document.querySelectorAll('input, select, textarea').forEach(el => {
+  el.addEventListener('change', updateProgress);
+  el.addEventListener('input', updateProgress);
+});
+
+// Radio pills
+document.querySelectorAll('.radio-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const name = pill.querySelector('input').name;
+    document.querySelectorAll(`.radio-pill input[name="${name}"]`).forEach(r => {
+      r.closest('.radio-pill').classList.remove('selected');
+    });
+    pill.querySelector('input').checked = true;
+    pill.classList.add('selected');
+    updateProgress();
+  });
+});
+
+// ── WEBHOOK URL ──────────────────────────────────────────────────────────────
+// Replace the placeholder below with your actual n8n webhook URL after importing
+// the workflow. Format: https://n8n.nurturesol.com/webhook/leadspeed-onboarding
+const N8N_WEBHOOK_URL = 'https://n8n.nurturesol.com/webhook/leadspeed-onboarding';
+
+// ── COLLECT ALL FORM DATA ─────────────────────────────────────────────────────
+function collectFormData() {
+  const data = {};
+
+  // Map every named input, select, textarea
+  document.querySelectorAll('input[name], select[name], textarea[name]').forEach(el => {
+    if (el.type === 'checkbox') {
+      if (!data[el.name]) data[el.name] = [];
+      if (el.checked) data[el.name].push(el.value || el.closest('.check-item')?.querySelector('span')?.textContent || 'checked');
+    } else {
+      data[el.name] = el.value || '';
+    }
+  });
+
+  // Fallback: collect inputs without name by section order (positional)
+  const fieldMap = [
+    // Section 1
+    'legal_name','dba_name','business_phone','business_email','website','ein','address',
+    // Section 2
+    'primary_contact_name','primary_contact_title','primary_contact_phone','primary_contact_email',
+    'tech_contact_name','tech_contact_email','tech_contact_phone','preferred_contact','additional_team',
+    // Section 3
+    'service_category','services_offered','services_not_offered','top_service',
+    'pricing_upfront','avg_job_value','pricing_language',
+    // Section 4
+    'primary_city','travel_radius','cities_covered','zip_codes','areas_excluded','emergency_service',
+    // Section 5
+    'hours_mon_fri','hours_saturday','hours_sunday','appt_type','appt_duration',
+    'buffer_time','advance_booking_min','advance_booking_max','concurrent_techs','blocked_dates','existing_calendar',
+    // Section 6
+    'ai_agent_name','ai_tone','brand_personality','qualified_criteria','unqualified_criteria',
+    'min_job_value','services_renters','objections_responses','escalation_custom',
+    // Section 7
+    'fb_ad_account_id','fb_page_url','google_ads_id','monthly_ad_spend','landing_page_url',
+    // Section 8
+    'current_crm','existing_ghl','email_tool','website_platform','review_platform',
+    'google_business_url','other_tools','data_migration',
+    // Section 9
+    'business_type','state_of_inc','twilio_account','preferred_area_code','sms_consent_language','prior_sms_issues',
+    // Section 10
+    'brand_colors','logo_url','google_review_count','google_star_rating','testimonials',
+    'trust_signals','guarantees','financing','financing_provider',
+    // Section 11
+    'monthly_leads','current_conversion','primary_goal','biggest_pain','additional_notes'
+  ];
+
+  // Grab all unnamed inputs/selects/textareas in DOM order
+  const unnamed = Array.from(document.querySelectorAll(
+    'input:not([type="checkbox"]):not([name]), select:not([name]), textarea:not([name])'
+  ));
+  unnamed.forEach((el, i) => {
+    if (fieldMap[i]) data[fieldMap[i]] = el.value || '';
+  });
+
+  // Collect checkboxes without name
+  const checkGroups = document.querySelectorAll('.check-group');
+  const checkNames = ['escalation_triggers', 'ad_platforms', 'access_provided'];
+  checkGroups.forEach((group, i) => {
+    if (checkNames[i]) {
+      const checked = Array.from(group.querySelectorAll('input:checked'))
+        .map(c => c.closest('.check-item')?.querySelector('span')?.textContent || '');
+      data[checkNames[i]] = checked.join(', ');
+    }
+  });
+
+  return data;
+}
+
+// ── VALIDATION ────────────────────────────────────────────────────────────────
+function validate() {
+  const allInputs = document.querySelectorAll('input:not([type="checkbox"]), select, textarea');
+  let missing = 0;
+  allInputs.forEach(el => {
+    el.style.borderColor = '';
+    const isRequired = el.closest('.field')?.querySelector('label .req');
+    if (isRequired && (!el.value || !el.value.trim())) {
+      el.style.borderColor = '#E24B4A';
+      missing++;
+    }
+  });
+  return missing;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+async function handleSubmit() {
+  const missing = validate();
+  if (missing > 0) {
+    const first = document.querySelector('[style*="E24B4A"]');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    showToast(`${missing} required field${missing > 1 ? 's' : ''} still need filling — highlighted in red.`, 'error');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  const payload = collectFormData();
+
+  try {
+    const res = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      btn.textContent = 'Submitted ✓';
+      btn.style.background = '#1D9E75';
+      btn.style.opacity = '1';
+      showToast('Questionnaire submitted! The NurtureSol team will be in touch within 2 business hours.', 'success');
+      document.getElementById('progressFill').style.width = '100%';
+      document.getElementById('progressLabel').textContent = 'Submitted successfully';
+    } else {
+      throw new Error('Server responded with ' + res.status);
+    }
+  } catch (err) {
+    btn.textContent = 'Submit questionnaire →';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    showToast('Submission failed — please try again or contact nurturesol.com', 'error');
+    console.error('Webhook error:', err);
+  }
+}
+
+// ── TOAST NOTIFICATION ────────────────────────────────────────────────────────
+function showToast(msg, type) {
+  const existing = document.getElementById('toast');
+  if (existing) existing.remove();
+  const t = document.createElement('div');
+  t.id = 'toast';
+  t.textContent = msg;
+  t.style.cssText = `
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:${type === 'success' ? '#1D9E75' : '#E24B4A'};
+    color:#fff;padding:14px 24px;border-radius:10px;
+    font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+    box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:9999;
+    max-width:480px;text-align:center;line-height:1.4;
+  `;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), type === 'success' ? 6000 : 4000);
+}
+</script>
+</body>
+</html>
